@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, ElementNotInteractableException
 from bs4 import BeautifulSoup
 import time
+import datetime
 
 class webscrapper:
 
@@ -65,7 +66,7 @@ class webscrapper:
         f = open(path, encoding='utf-8')
         soup = BeautifulSoup(f.read(), 'html.parser')
 
-        parent = soup.find('div', class_=self._ARTICLE_PARENT_CLASS)
+        parent = soup.find('div', class_ = self._ARTICLE_PARENT_CLASS)
         paragraph = parent.find_all('p')
         article = ""
         for p in paragraph:
@@ -77,13 +78,21 @@ class webscrapper:
         f = open(path, encoding='utf-8')
         soup = BeautifulSoup(f.read(), 'html.parser')
 
-        parent = soup.find('div', class_=self._TICKER_PARENT_CLASS)
+        parent = soup.find('div', class_ = self._TICKER_PARENT_CLASS)
         ticker_containers = parent.find_all('a', class_='ticker')
         tickers = []
         for t in ticker_containers:
             tickers.append(t['title'])
         return tickers
 
+
+    _TIME_CLASS = 'byline-attr-meta-time'
+    def get_date(self, path):
+        f = open(path, encoding='utf-8')
+        soup = BeautifulSoup(f.read(), 'html.parser')
+
+        time_container = soup.find('time', class_ = self._TIME_CLASS)
+        return self._time_to_timestamp(time_container['datetime'])
     #--------PRIVATE METHODS--------#
     
     _WAIT_TIME = 2
@@ -104,3 +113,11 @@ class webscrapper:
             print("Cookie not found")
         except ElementNotInteractableException:
             print("No button")
+
+    #2025-06-01T22:09:29.000Z
+    def _time_to_timestamp(self, time_str):
+        time_str = time_str.split('T')
+        date = time_str[0].split('-')
+        hour = time_str[1].split(':')
+        dt = datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(hour[0]), int(hour[1]), 0)
+        return dt.timestamp()
