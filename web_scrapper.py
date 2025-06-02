@@ -95,6 +95,7 @@ class webscrapper:
         return self._time_to_timestamp(time_container['datetime'])
     #--------PRIVATE METHODS--------#
     
+    #adjust wait time depending on internet speed
     _WAIT_TIME = 2
     def _load_entire_page(self, driver):
         lastScroll = -1
@@ -106,6 +107,7 @@ class webscrapper:
             currentScroll = driver.execute_script("return document.body.scrollHeight")
 
     def _click_cookie(self, driver):
+        time.sleep(self._WAIT_TIME)
         try:
             cookie_button = driver.find_element(by=By.NAME, value="agree")
             cookie_button.click()
