@@ -16,6 +16,7 @@ for l in links:
     data['article'] = scrapper.get_article(PATH_TO_ARTICLE_SOURCE)
     data['tickers'] = scrapper.get_tickers(PATH_TO_ARTICLE_SOURCE)
     data['date'] = scrapper.get_date(PATH_TO_ARTICLE_SOURCE)
+
     
 
 scrapper.get_article(links.pop())

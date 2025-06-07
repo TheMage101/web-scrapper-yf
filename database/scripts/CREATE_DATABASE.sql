@@ -5,11 +5,19 @@ CREATE TABLE News (
     PRIMARY KEY(Link)
 );
 
+CREATE TABLE SICCodes (
+    Code: VARCHAR(10),
+    CodeDescription: VARCHAR(128),
+    PRIMARY KEY (Code)
+);
+
 CREATE TABLE Company (
     Ticker: VARCHAR(10),
     NewsLink: VARCHAR(255),
+    SICCode: VARCHAR(10),
     PRIMARY KEY(Ticker),
-    FOREIGN KEY (NewsLink) REFERENCES News (Link)
+    FOREIGN KEY (NewsLink) REFERENCES News (Link),
+    FOREIGN KEY (SICCode) REFERENCES SICCodes (Code)
 );
 
 CREATE TABLE CompanyValues (

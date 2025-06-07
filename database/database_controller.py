@@ -14,7 +14,7 @@ class database_controller:
 
 
     def create_tables(self):
-        file = open('scrips/CREATE_DATABASE.sql')
+        file = open('scripts/CREATE_DATABASE.sql')
         cur = self._con.cursor()
 
         cur.executescript(file.read())  
@@ -24,4 +24,12 @@ class database_controller:
 
     def add_article(self, data):
         cur = self._con.cursor()
-        cur.execute('INSERT INTO News')
+        sql = 'INSERT INTO News(Link, Article, ArticleTime) VALUES(?, ?, ?)'
+        cur.execute(sql, (data['link'], data['article'], data['date']))
+        
+        sql = 'INSERT INTO Company(Ticker, NewsLink, SICCode) VALUES (?, ?, ?)'
+
+    def save_count(self):
+        cur = self._con.cursor()
+        cur = cur.execute('SELECT COUNT(*) FROM News')
+        amount = cur.fetchall()
