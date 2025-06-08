@@ -2,7 +2,7 @@ import sqlite3
 from sqlite3 import Connection
 
 class database_controller:
-    _PATH_TO_DB = 'tmp/database.db'
+    _PATH_TO_DB = 'database/database.db'
 
     _con: Connection
 
@@ -14,10 +14,18 @@ class database_controller:
 
 
     def create_tables(self):
-        file = open('scripts/CREATE_DATABASE.sql')
+        file = open('database/scripts/CREATE_DATABASE.sql')
         cur = self._con.cursor()
 
-        cur.executescript(file.read())  
+        cur.executescript(file.read())
+        self._con.commit()
+        cur.close() 
+
+    def drop_tables(self):
+        file = open('database/scripts/DROP_DATABASE.sql')
+        cur = self._con.cursor()
+
+        cur.executescript(file.read())
         self._con.commit()
         cur.close() 
 
@@ -26,8 +34,13 @@ class database_controller:
         cur = self._con.cursor()
         sql = 'INSERT INTO News(Link, Article, ArticleTime) VALUES(?, ?, ?)'
         cur.execute(sql, (data['link'], data['article'], data['date']))
-        
-        sql = 'INSERT INTO Company(Ticker, NewsLink, SICCode) VALUES (?, ?, ?)'
+        self._con.commit()
+
+        sql = 'INSERT INTO Company(Ticker, NewsLink) VALUES(?, ?)'
+        for ticker in data['tickers']:
+            cur.execute(sql, (ticker, data['link']))
+        self._con.commit()
+        cur.close()
 
     def save_count(self):
         cur = self._con.cursor()

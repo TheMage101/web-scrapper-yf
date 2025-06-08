@@ -60,7 +60,7 @@ class webscrapper:
 
         driver.close()
 
-    _ARTICLE_PARENT_CLASS = 'yf-1ir6o1g' 
+    _ARTICLE_PARENT_CLASS = 'body-wrap' 
     #returns the content of the article
     def get_article(self, path):
         f = open(path, encoding='utf-8')
