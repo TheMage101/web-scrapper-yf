@@ -9,7 +9,7 @@ class webscrapper:
 
 
 
-    _YAHOO_MAIN_PAGE = "https://finance.yahoo.com/news/"
+    _YAHOO_MAIN_PAGE = "https://finance.yahoo.com/topic/stock-market-news"
     # Collect the main page of yahoo finance news HTML
     def get_main_page_source(self, path_source_file):
         driver = webdriver.Firefox()
@@ -73,7 +73,7 @@ class webscrapper:
             article = article + p.get_text()
         return article
 
-    _TICKER_PARENT_CLASS = 'yf-pqeumq'
+    _TICKER_PARENT_CLASS = 'carousel-top'
     def get_tickers(self, path):
         f = open(path, encoding='utf-8')
         soup = BeautifulSoup(f.read(), 'html.parser')

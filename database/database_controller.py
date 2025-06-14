@@ -46,3 +46,12 @@ class database_controller:
         cur = self._con.cursor()
         cur = cur.execute('SELECT COUNT(*) FROM News')
         amount = cur.fetchall()
+
+    def is_in_db(self, link: str) -> bool:
+        cur = self._con.cursor()
+        sql = 'SELECT COUNT(Link) FROM News WHERE Link = ?'
+        cur = cur.execute(sql, link)
+        if cur.fetchone() == 1:
+            return True
+        return False
+        

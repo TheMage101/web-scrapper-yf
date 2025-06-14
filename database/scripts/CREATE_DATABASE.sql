@@ -14,7 +14,7 @@ CREATE TABLE SICCodes (
 CREATE TABLE Company (
     Ticker VARCHAR(10),
     NewsLink VARCHAR(255),
-    PRIMARY KEY(Ticker),
+    PRIMARY KEY(Ticker, NewsLink),
     FOREIGN KEY (NewsLink) REFERENCES News (Link)
 );
 
