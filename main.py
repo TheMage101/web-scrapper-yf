@@ -13,12 +13,14 @@ links = scrapper.get_links_article(PATH_TO_MAIN_PAGE_SOURCE)
 
 #gets all the data from a link
 for l in links:
-    data = {'link': l}
-    scrapper.get_article_source(l)
-    data['article'] = scrapper.get_article(PATH_TO_ARTICLE_SOURCE)
-    data['tickers'] = scrapper.get_tickers(PATH_TO_ARTICLE_SOURCE)
-    data['date'] = scrapper.get_date(PATH_TO_ARTICLE_SOURCE)
-    if data['article'] != None and data['tickers'] != None and data['date'] != None:
-        db.add_article(data)
+    if(not db.is_in_db(l)):
+        print(l)
+        data = {'link': l}
+        scrapper.get_article_source(l)
+        data['article'] = scrapper.get_article(PATH_TO_ARTICLE_SOURCE)
+        data['tickers'] = scrapper.get_tickers(PATH_TO_ARTICLE_SOURCE)
+        data['date'] = scrapper.get_date(PATH_TO_ARTICLE_SOURCE)
+        if data['article'] != None and data['tickers'] != None and data['date'] != None:
+            db.add_article(data) 
 
 db.close()

@@ -7,8 +7,6 @@ import datetime
 
 class webscrapper:
 
-
-
     _YAHOO_MAIN_PAGE = "https://finance.yahoo.com/topic/stock-market-news"
     # Collect the main page of yahoo finance news HTML
     def get_main_page_source(self, path_source_file):
