@@ -54,4 +54,34 @@ class database_controller:
         if cur.fetchone()[0] == 1:
             return True
         return False
-        
+    
+    def get_articles_from_prev_date(self, date: int):
+        request = f"""
+            SELECT Link FROM NEWS WHERE ArticleTime < {date}
+        """
+
+        cur = self._con.cursor()
+        cur.execute(request)
+        articles = cur.fetchall()
+        cur.close()
+        return articles[0]
+    
+    def get_tickers(self, article_link: str):
+        request = f"""
+        SELECT Ticker FROM Company WHERE NewsLink = "{article_link}"
+        """
+        cur = self._con.cursor()
+        cur.execute(request)
+        tickers = cur.fetchall()
+        cur.close()
+        return tickers
+    
+    def add_ticker_value(self, ticker: str, time, price):
+        request = f"""
+        INSERT INTO CompanyValues (Ticker, ValueTime, ValuePrice) VALUES (?, ?, ?)
+        """
+
+        cur = self._con.cursor()
+        cur.execute(request, (ticker, time, float(price),))
+        cur.close()
+        self._con.commit()

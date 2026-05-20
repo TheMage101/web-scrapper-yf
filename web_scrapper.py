@@ -22,6 +22,7 @@ class webscrapper:
 
 
         #save the html source
+        
         source = driver.page_source
         file = open(path_source_file, 'w+', encoding='utf-8')
         file.write(source)
@@ -76,8 +77,10 @@ class webscrapper:
         f = open(path, encoding='utf-8')
         soup = BeautifulSoup(f.read(), 'html.parser')
 
-        parent = soup.find('div', class_ = self._TICKER_PARENT_CLASS)
+        parent = soup.find('ul', class_ = self._TICKER_PARENT_CLASS)
         ticker_containers = parent.find_all('a', class_='ticker')
+        #ticker_containers = parent.find_elements(By.CSS_SELECTOR, value='a.ticker')
+
         tickers = []
         for t in ticker_containers:
             tickers.append(t['title'])
@@ -106,6 +109,11 @@ class webscrapper:
 
     def _click_cookie(self, driver):
         time.sleep(self._WAIT_TIME)
+        try:
+            go_to_end = driver.find_element(by=By.ID, value="scroll-down-btn")
+            go_to_end.click()
+        except Exception:
+            print("Agree button is visible")
         try:
             cookie_button = driver.find_element(by=By.NAME, value="agree")
             cookie_button.click()
