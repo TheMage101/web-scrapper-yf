@@ -120,7 +120,7 @@ class webscrapper:
         except NoSuchElementException:
             print("Cookie not found")
         except ElementNotInteractableException:
-            print("No button")
+            print("Not a button")
 
     #2025-06-01T22:09:29.000Z
     def _time_to_timestamp(self, time_str):

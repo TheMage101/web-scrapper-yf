@@ -23,12 +23,3 @@ def get_prices(ticker: str, start_time: int, end_time: int):
     df["Timestamps"] = timestamps
     df["Close"] = data["Close"]
     return df
-
-""" start_date = datetime.datetime.fromtimestamp(time.time() - 5*24*60*60)
-end_date = datetime.datetime.fromtimestamp(time.time())
-data = yf.download(tickers="AAPL",
-            start=start_date,
-            end=end_date,
-            interval="1m")
-data.reset_index(inplace=True, drop=False)
-print(data["Datetime"]) """

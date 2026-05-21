@@ -11,7 +11,7 @@ scrapper = webscrapper()
 db = database_controller()
 db.connect()
 
-""" #scrapper.get_main_page_source(PATH_TO_MAIN_PAGE_SOURCE)
+scrapper.get_main_page_source(PATH_TO_MAIN_PAGE_SOURCE)
 links = scrapper.get_links_article(PATH_TO_MAIN_PAGE_SOURCE)
 
 #gets all the data from a link
@@ -25,7 +25,6 @@ for l in links:
         data['date'] = scrapper.get_date(PATH_TO_ARTICLE_SOURCE)
         if data['article'] != None and data['tickers'] != None and data['date'] != None:
             db.add_article(data) 
- """
 
 # get the stock from 5 days old news
 curr_date = int(time.time())
