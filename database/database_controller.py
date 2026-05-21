@@ -64,7 +64,9 @@ class database_controller:
         cur.execute(request)
         articles = cur.fetchall()
         cur.close()
-        return articles[0]
+        if len(articles) > 0:
+            return articles[0]
+        return None
     
     def get_tickers(self, article_link: str):
         request = f"""
@@ -77,7 +79,7 @@ class database_controller:
         return tickers
     
     def add_ticker_value(self, ticker: str, time, price):
-        request = f"""
+        request = """
         INSERT INTO CompanyValues (Ticker, ValueTime, ValuePrice) VALUES (?, ?, ?)
         """
 

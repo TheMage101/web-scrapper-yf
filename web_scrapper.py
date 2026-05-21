@@ -113,7 +113,7 @@ class webscrapper:
             go_to_end = driver.find_element(by=By.ID, value="scroll-down-btn")
             go_to_end.click()
         except Exception:
-            print("Agree button is visible")
+            ...  # Just skips it as it is not truly an error
         try:
             cookie_button = driver.find_element(by=By.NAME, value="agree")
             cookie_button.click()
