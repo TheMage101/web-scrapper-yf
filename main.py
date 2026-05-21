@@ -13,7 +13,7 @@ db = database_controller()
 db.connect()
 # db.create_tables()  # TODO: Create tables if not created yet otherwise do nothing
 
-#scrapper.get_main_page_source(PATH_TO_MAIN_PAGE_SOURCE)
+scrapper.get_main_page_source(PATH_TO_MAIN_PAGE_SOURCE)
 links = scrapper.get_links_article(PATH_TO_MAIN_PAGE_SOURCE)
 
 #gets all the data from a link
