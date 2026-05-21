@@ -38,10 +38,11 @@ class webscrapper:
         #finds all articles that contain a ticker
         #makes sure there is no duplicate
         links = set()
-        tickers = soup.find_all("a", class_='ticker')
+        tickers = soup.find_all("a", class_='ticker-link')
         for t in tickers: 
             parent = t.find_parent('div', class_='content')
-            links.add(parent.find('a')["href"])
+            if parent:
+                links.add(parent.find('a')["href"])
         return links
 
     #gets the html source of an article  
@@ -99,13 +100,13 @@ class webscrapper:
     #adjust wait time depending on internet speed
     _WAIT_TIME = 2
     def _load_entire_page(self, driver):
-        lastScroll = -1
-        currentScroll = 0
-        while(lastScroll != currentScroll):
-            lastScroll = currentScroll
+        last_scroll = -1
+        current_scroll = 0
+        while(last_scroll != current_scroll):
+            last_scroll = current_scroll
             driver.execute_script("window.scrollBy(0, 10000)")
             time.sleep(self._WAIT_TIME)
-            currentScroll = driver.execute_script("return document.body.scrollHeight")
+            current_scroll = driver.execute_script("return document.body.scrollHeight")
 
     def _click_cookie(self, driver):
         time.sleep(self._WAIT_TIME)

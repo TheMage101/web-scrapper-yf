@@ -18,8 +18,11 @@ links = scrapper.get_links_article(PATH_TO_MAIN_PAGE_SOURCE)
 
 #gets all the data from a link
 print("===== GOING THROUGH LINKS =====")
+print(len(links))
+new_links = 0
 for l in tqdm(links):
     if(not db.is_in_db(l)):
+        new_links += 1
         data = {'link': l}
         scrapper.get_article_source(l)
         data['article'] = scrapper.get_article(PATH_TO_ARTICLE_SOURCE)
@@ -27,6 +30,7 @@ for l in tqdm(links):
         data['date'] = scrapper.get_date(PATH_TO_ARTICLE_SOURCE)
         if data['article'] != None and data['tickers'] != None and data['date'] != None:
             db.add_article(data) 
+print(f"Amount of new links: {new_links}")
 
 # get the stock from 5 days old news
 print("===== COLLECTING PRICES =====")
